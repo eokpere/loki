@@ -1,5 +1,6 @@
 apiVersion: v2
 appVersion: 2.8.2
+dependencies:
 - alias: grafana-agent-operator
   condition: monitoring.selfMonitoring.grafanaAgent.installOperator
   name: grafana-agent-operator
