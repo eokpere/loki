@@ -199,7 +199,7 @@ loki:
       {{- tpl (. | toYaml) $ | nindent 4 }}
     {{- end }}
   # Should authentication be enabled
-  auth_enabled: true
+  auth_enabled: false
   # -- Tenants list to be created on nginx htpasswd file, with name and password keys
   tenants: []
   # -- Check https://grafana.com/docs/loki/latest/configuration/#server for more info on the server configuration.
