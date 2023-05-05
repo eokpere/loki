@@ -1,11 +1,11 @@
 apiVersion: v2
 appVersion: 2.8.2
+description: Helm chart for Grafana Loki in simple, scalable mode
 dependencies:
 - alias: grafana-agent-operator
   condition: monitoring.selfMonitoring.grafanaAgent.installOperator
   name: grafana-agent-operator
   repository: https://grafana.github.io/helm-charts
   version: 0.2.3
-description: Helm chart for Grafana Loki in simple, scalable mode
 home: https://grafana.github.io/helm-charts
 version: 5.5.0
