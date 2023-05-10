@@ -474,7 +474,7 @@ monitoring:
   # Dashboards for monitoring Loki
   dashboards:
     # -- If enabled, create configmap with dashboards for monitoring Loki
-    enabled: false
+    enabled: true
     # -- Alternative namespace to create dashboards ConfigMap in
     namespace: null
     # -- Additional annotations for the dashboards ConfigMap
@@ -485,9 +485,9 @@ monitoring:
   # Recording rules for monitoring Loki, required for some dashboards
   rules:
     # -- If enabled, create PrometheusRule resource with Loki recording rules
-    enabled: false
+    enabled: true
     # -- Include alerting rules
-    alerting: false
+    alerting: true
     # -- Alternative namespace to create PrometheusRule resources in
     namespace: null
     # -- Additional annotations for the rules PrometheusRule resource
@@ -507,7 +507,7 @@ monitoring:
   # ServiceMonitor configuration
   serviceMonitor:
     # -- If enabled, ServiceMonitor resources for Prometheus Operator are created
-    enabled: false
+    enabled: true
     # -- Namespace selector for ServiceMonitor resources
     namespaceSelector: {}
     # -- ServiceMonitor annotations
@@ -530,7 +530,7 @@ monitoring:
     # -- If defined, will create a MetricsInstance for the Grafana Agent Operator.
     metricsInstance:
       # -- If enabled, MetricsInstance resources for Grafana Agent Operator are created
-      enabled: false
+      enabled: true
       # -- MetricsInstance annotations
       annotations: {}
       # -- Additional MetricsInstance labels
@@ -543,7 +543,7 @@ monitoring:
   # It will create custom resources for GrafanaAgent, LogsInstance, and PodLogs to configure
   # scrape configs to scrape its own logs with the labels expected by the included dashboards.
   selfMonitoring:
-    enabled: false
+    enabled: true
     # -- Tenant to use for self monitoring
     tenant:
       # -- Name of the tenant
@@ -556,7 +556,7 @@ monitoring:
       # -- Controls whether to install the Grafana Agent Operator and its CRDs.
       # Note that helm will not install CRDs if this flag is enabled during an upgrade.
       # In that case install the CRDs manually from https://github.com/grafana/agent/tree/main/production/operator/crds
-      installOperator: false
+      installOperator: true
       # -- Grafana Agent annotations
       annotations: {}
       # -- Additional Grafana Agent labels
@@ -583,7 +583,7 @@ monitoring:
   # The Loki canary pushes logs to and queries from this loki installation to test
   # that it's working correctly
   lokiCanary:
-    enabled: false
+    enabled: true
     # -- Additional annotations for the `loki-canary` Daemonset
     annotations: {}
     # -- Additional CLI arguments for the `loki-canary' command
@@ -680,7 +680,7 @@ write:
 # Configuration for the table-manager
 tableManager:
   # -- Specifies whether the table-manager should be enabled
-  enabled: true
+  enabled: false
   image:
     # -- The Docker registry for the table-manager image. Overrides `loki.image.registry`
     registry: null
@@ -963,7 +963,7 @@ singleBinary:
 # If you enable this, make sure to disable the gateway.
 # You'll need to supply authn configuration for your ingress controller.
 ingress:
-  enabled: true
+  enabled: false
   ingressClassName: ""
   annotations: {}
   #    nginx.ingress.kubernetes.io/auth-type: basic
@@ -973,6 +973,7 @@ ingress:
   #      proxy_set_header X-Scope-OrgID $remote_user;
   paths:
     write:
+      - /api/prom/push
       - /loki/api/v1/push
     read:
       - /api/prom/tail
@@ -983,9 +984,15 @@ ingress:
       - /prometheus/api/v1/rules
       - /prometheus/api/v1/alerts
     singleBinary:
+      - /api/prom/push
       - /loki/api/v1/push
+      - /api/prom/tail
       - /loki/api/v1/tail
       - /loki/api
+      - /api/prom/rules
+      - /loki/api/v1/rules
+      - /prometheus/api/v1/rules
+      - /prometheus/api/v1/alerts
   hosts:
     - loki.example.com
   tls: []
@@ -1000,7 +1007,7 @@ memberlist:
 # Configuration for the gateway
 gateway:
   # -- Specifies whether the gateway should be enabled
-  enabled: false
+  enabled: true
   # -- Number of replicas for the gateway
   replicas: 1
   # -- Enable logging of 2xx and 3xx HTTP requests
