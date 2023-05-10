@@ -146,8 +146,8 @@ loki:
     {{ include "loki.rulerConfig" . }}
 
     table_manager:
-      retention_deletes_enabled: false
-      retention_period: 0
+      retention_deletes_enabled: true
+      retention_period: 30
 
     {{- with .Values.loki.memcached.results_cache }}
     query_range:
