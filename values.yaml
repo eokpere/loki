@@ -680,7 +680,7 @@ write:
 # Configuration for the table-manager
 tableManager:
   # -- Specifies whether the table-manager should be enabled
-  enabled: true
+  enabled: false
   image:
     # -- The Docker registry for the table-manager image. Overrides `loki.image.registry`
     registry: null
